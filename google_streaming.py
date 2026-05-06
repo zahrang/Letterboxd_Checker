@@ -26,11 +26,11 @@ SERVICE_MAPPING = {
     "Apple TV+": "Apple TV Plus",
     "Apple TV Plus": "Apple TV Plus",
     
-    # BBC iPlayer (UK specific)
+    # BBC iPlayer
     "BBC iPlayer": "BBC iPlayer",
     "BBC": "BBC iPlayer",
     
-    # Additional UK services you might want
+    # Additional services (UK free with ads)
     "ITVX": "ITVX",
     "ITV Hub": "ITVX",
     "Channel 4": "Channel 4",

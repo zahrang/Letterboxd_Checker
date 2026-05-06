@@ -11,7 +11,6 @@ import time
 
 console = Console()
 
-
 def main():
     console.clear()
     
@@ -20,11 +19,6 @@ def main():
         border_style="cyan"
     ))
     console.print()
-    
-    if not SERPAPI_KEY or SERPAPI_KEY == "YOUR_SERPAPI_KEY_HERE":
-        console.print("[red]❌ Please add your SerpApi key to config.py[/red]")
-        console.print("[dim]Get a free key at https://serpapi.com/[/dim]")
-        return
     
     # Fetch watchlist
     with Progress(

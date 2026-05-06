@@ -7,13 +7,10 @@ HEADERS = {
     "Referer": "https://letterboxd.com/",
 }
 
-# TMDb API (keep as fallback, not currently used)
-TMDB_API_KEY = "4b926dadd0ddd32ec3fedb8491dcd4b6"
-
 # SerpApi for Google "Available On" results
-SERPAPI_KEY = "2628f532c568be658f64e686c2e800cc9b54ac037933202d4c43f6c806506088"  # Get from https://serpapi.com/
+SERPAPI_KEY = "2628f532c568be658f64e686c2e800cc9b54ac037933202d4c43f6c806506088"
 
-# ALL the streaming services you subscribe to or have access to
+# ALL the streaming services to check against
 MY_SERVICES = [
     "Netflix",
     "Amazon Prime Video", 
@@ -26,6 +23,6 @@ MY_SERVICES = [
     "Channel 5",        # Free with ads
 ]
 
-REGION = "GB"  # UK region for Google searches
+REGION = "GB"
 
 DATA_FILE = "data/watchlist.json"
