@@ -2,6 +2,9 @@
 
 A personalised command-line tool that monitors your Letterboxd watchlist and shows which films are available on your specific streaming services.
 
+## Personalisation:
+- Edit config.py with your custom API key and Letterboxd username in order to use.
+
 ## ✨ Features
 
 - Monitors your Letterboxd watchlist for new additions and removals
