@@ -1,4 +1,4 @@
-USERNAME = "occhiolizm"
+USERNAME = #Use custom username
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -8,7 +8,7 @@ HEADERS = {
 }
 
 # SerpApi for Google "Available On" results
-SERPAPI_KEY = "2628f532c568be658f64e686c2e800cc9b54ac037933202d4c43f6c806506088"
+SERPAPI_KEY = #Use custom key
 
 # ALL the streaming services to check against
 MY_SERVICES = [
