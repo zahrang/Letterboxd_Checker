@@ -1,11 +1,11 @@
-# 🎬 Letterboxd Watchlist Checker
+# Letterboxd Watchlist Checker
 
-A personalised command-line tool that monitors your Letterboxd watchlist and shows which films are available on your specific streaming services.
+A personalised command-line tool that searches through your Letterboxd watchlist and shows which films are available on your specific streaming services.
 
 ## Personalisation:
 - Edit config.py with your custom API key and Letterboxd username in order to use.
 
-## ✨ Features
+## Features
 
 - Monitors your Letterboxd watchlist for new additions and removals
 - Checks streaming availability using Google's "Available On" API
@@ -13,8 +13,6 @@ A personalised command-line tool that monitors your Letterboxd watchlist and sho
 - Shows exactly which of your subscribed services have each film
 - Beautiful terminal interface with tables, colours, and progress bars
 - Caches results to avoid repeated API calls
-
-## 🚀 Quick Start
 
 ### Prerequisites
 
