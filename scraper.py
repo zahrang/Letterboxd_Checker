@@ -120,7 +120,7 @@ def fetch_watchlist():
         
         page += 1
     
-    print(f"\n✅ Total films found: {len(films)}")
+    print(f"\nTotal films found: {len(films)}")
     
     if films:
         print("\nFirst 20 films in your watchlist:")

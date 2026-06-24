@@ -120,7 +120,7 @@ def get_streaming_services(title):
 
 def test_api():
     """Test if the TMDB API is working correctly"""
-    print(f"\n🔍 Testing TMDB API (Region: {REGION})")
+    print(f"\nTesting TMDB API (Region: {REGION})")
     print("=" * 50)
     
     test_films = [
@@ -133,19 +133,19 @@ def test_api():
         print(f"\nChecking: {film}")
         movie_id = search_movie(film)
         if movie_id:
-            print(f"  ✓ Found movie ID: {movie_id}")
+            print(f"Found movie ID: {movie_id}")
             providers = get_providers(movie_id)
             if providers:
-                print(f"  ✓ Subscription providers: {providers}")
+                print(f"Subscription providers: {providers}")
                 matched = get_streaming_services(film)
                 if matched:
-                    print(f"  ✓ Matched your services: {matched}")
+                    print(f"Matched your services: {matched}")
                 else:
-                    print(f"  ✗ No match with your services: {MY_SERVICES}")
+                    print(f"No match with your services: {MY_SERVICES}")
             else:
-                print(f"  ✗ No subscription providers in {REGION}")
+                print(f"No subscription providers in {REGION}")
         else:
-            print(f"  ✗ Movie not found")
+            print(f"Movie not found")
         time.sleep(0.2)  # Small delay between tests
 
 

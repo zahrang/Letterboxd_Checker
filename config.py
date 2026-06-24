@@ -1,4 +1,4 @@
-USERNAME = #Use custom username
+USERNAME = "[Insert your Letterboxd username here]"
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -8,19 +8,16 @@ HEADERS = {
 }
 
 # SerpApi for Google "Available On" results
-SERPAPI_KEY = #Use custom key
+SERPAPI_KEY = "[Insert your SerpApi key here]"
 
-# ALL the streaming services to check against
+# ALL the streaming services to check against, update this list as needed
 MY_SERVICES = [
     "Netflix",
     "Amazon Prime Video", 
     "Disney Plus",
     "HBO Max",
     "Apple TV Plus",
-    "BBC iPlayer",      # Free with TV Licence
-    "ITVX",             # Free with ads
-    "Channel 4",        # Free with ads
-    "Channel 5",        # Free with ads
+    "BBC iPlayer",
 ]
 
 REGION = "GB"

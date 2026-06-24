@@ -15,7 +15,7 @@ def main():
     console.clear()
     
     console.print(Panel.fit(
-        f"[bold cyan]🎬 Letterboxd Watchlist Checker[/bold cyan]\n[dim]Google Available On API | Region: {REGION.upper()}[/dim]",
+        f"[bold cyan]Letterboxd Watchlist Checker[/bold cyan]\n[dim]Google Available On API | Region: {REGION.upper()}[/dim]",
         border_style="cyan"
     ))
     console.print()
@@ -31,7 +31,7 @@ def main():
         progress.update(task, completed=True)
     
     if not current_watchlist:
-        console.print("\n[red]❌ Could not fetch your watchlist.[/red]")
+        console.print("\n[red]Error: Could not fetch your watchlist.[/red]")
         return
     
     # Check streaming availability with Google
@@ -58,7 +58,7 @@ def main():
     
     # Show results
     if available_films:
-        console.print(f"\n[bold green]✓ Found {len(available_films)} films available on your subscription services![/bold green]\n")
+        console.print(f"\n[bold green]Found {len(available_films)} films available on your subscription services![/bold green]\n")
         
         table = Table(title=f"Available in {REGION.upper()} on Your Streaming Services", border_style="green")
         table.add_column("#", style="dim", width=4)
@@ -66,11 +66,11 @@ def main():
         table.add_column("Services", style="cyan", width=30)
         
         for i, (film, services) in enumerate(available_films, 1):
-            table.add_row(str(i), film, " 📺 ".join(services))
+            table.add_row(str(i), film, ", ".join(services))
         
         console.print(table)
     else:
-        console.print("\n[yellow]⚠️ No films found on your subscription services[/yellow]")
+        console.print("\n[yellow]Error: No films found on your subscription services[/yellow]")
         console.print(f"\n[dim]Try:[/dim]")
         console.print(f"  • Verifying your SERPAPI_KEY is valid")
         console.print(f"  • Changing REGION in config.py (try 'US' or 'GB')")

@@ -16,6 +16,6 @@ for film in test_films:
     print(f"\nChecking: {film}")
     services = get_streaming_services(film)
     if services:
-        print(f"  ✓ Available on: {', '.join(services)}")
+        print(f"Available on: {', '.join(services)}")
     else:
-        print(f"  ✗ Not available")
+        print(f"Not available")
