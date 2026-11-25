@@ -17,7 +17,6 @@ Edit `config.py` with your custom API key and Letterboxd username in order to us
 ## Prerequisites
 
 - Python 3.8+
-- A [SerpApi](https://serpapi.com/) API key (free tier: 100 searches/month)
 
 ## Installation
 
