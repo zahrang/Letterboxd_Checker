@@ -1,130 +1,62 @@
+"""Scrapes a public Letterboxd watchlist (HTML pages, not RSS)."""
+
+import html
+
 import requests
 from bs4 import BeautifulSoup
-from config import USERNAME, HEADERS
+
+from config import HEADERS, REQUEST_TIMEOUT
 
 
-def fetch_watchlist_silent():
-    """Fetch watchlist without printing any output"""
+class WatchlistError(Exception):
+    """The watchlist couldn't be fetched."""
+
+
+def parse_page(page_html):
+    """Return the film titles on one watchlist page, e.g. 'Rope (1948)'."""
+    soup = BeautifulSoup(page_html, "html.parser")
+    films = []
+    for component in soup.find_all("div", class_="react-component"):
+        name = component.get("data-item-name")
+        if name and component.get("data-component-class") in ("LazyPoster", None):
+            films.append(html.unescape(name))
+    has_next = bool(soup.select_one("div.pagination a.next"))
+    return list(dict.fromkeys(films)), has_next
+
+
+def fetch_watchlist(username, verbose=False):
+    """Fetch every page of `username`'s watchlist. Raises WatchlistError."""
     films = []
     page = 1
-    
     while True:
-        url = f"https://letterboxd.com/{USERNAME}/watchlist/page/{page}/"
-        response = requests.get(url, headers=HEADERS)
-        
+        url = f"https://letterboxd.com/{username}/watchlist/page/{page}/"
+        if verbose:
+            print(f"Fetching: {url}")
+        try:
+            response = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
+        except requests.RequestException as e:
+            raise WatchlistError(f"network error fetching {url}: {e}") from e
+
+        if response.status_code == 404 and page == 1:
+            raise WatchlistError(f"Letterboxd user '{username}' not found")
         if response.status_code != 200:
-            break
-        
-        soup = BeautifulSoup(response.text, "html.parser")
-        page_films = []
-        
-        # Extract from React component data attributes
-        react_components = soup.find_all('div', class_='react-component')
-        
-        for component in react_components:
-            if component.get('data-component-class') == 'LazyPoster':
-                film_name = component.get('data-item-name')
-                if film_name:
-                    film_name = film_name.replace('&#039;', "'")
-                    page_films.append(film_name)
-        
-        # Backup method for any missed films
-        if not page_films:
-            grid_items = soup.find_all('li', class_='griditem')
-            for item in grid_items:
-                react_comp = item.find('div', class_='react-component')
-                if react_comp and react_comp.get('data-item-name'):
-                    film_name = react_comp.get('data-item-name')
-                    film_name = film_name.replace('&#039;', "'")
-                    page_films.append(film_name)
-        
-        # Remove duplicates
-        page_films = list(dict.fromkeys(page_films))
-        
-        if not page_films:
-            break
-        
+            raise WatchlistError(f"Letterboxd returned HTTP {response.status_code} for {url}")
+
+        page_films, has_next = parse_page(response.text)
+        if verbose:
+            print(f"Found {len(page_films)} films on page {page}")
         films.extend(page_films)
-        
-        # Check if there's a next page
-        pagination = soup.find('div', class_='pagination')
-        if pagination:
-            next_link = pagination.find('a', class_='next')
-            if not next_link:
-                break
-        else:
+
+        if not page_films or not has_next:
             break
-        
         page += 1
-    
-    return films
+
+    if verbose:
+        print(f"Total films found: {len(films)}")
+    return list(dict.fromkeys(films))
 
 
-def fetch_watchlist():
-    """Original function with print statements (kept for compatibility)"""
-    films = []
-    page = 1
-    
-    while True:
-        url = f"https://letterboxd.com/{USERNAME}/watchlist/page/{page}/"
-        print(f"Fetching: {url}")
-        
-        response = requests.get(url, headers=HEADERS)
-        
-        if response.status_code != 200:
-            print(f"Failed: Status {response.status_code}")
-            break
-        
-        soup = BeautifulSoup(response.text, "html.parser")
-        
-        page_films = []
-        
-        react_components = soup.find_all('div', class_='react-component')
-        
-        for component in react_components:
-            if component.get('data-component-class') == 'LazyPoster':
-                film_name = component.get('data-item-name')
-                if film_name:
-                    film_name = film_name.replace('&#039;', "'")
-                    page_films.append(film_name)
-        
-        if not page_films:
-            grid_items = soup.find_all('li', class_='griditem')
-            for item in grid_items:
-                react_comp = item.find('div', class_='react-component')
-                if react_comp and react_comp.get('data-item-name'):
-                    film_name = react_comp.get('data-item-name')
-                    film_name = film_name.replace('&#039;', "'")
-                    page_films.append(film_name)
-        
-        page_films = list(dict.fromkeys(page_films))
-        
-        print(f"Found {len(page_films)} films on page {page}")
-        
-        if not page_films:
-            break
-        
-        if page == 1 and page_films:
-            print(f"Sample films: {page_films[:3]}")
-        
-        films.extend(page_films)
-        
-        pagination = soup.find('div', class_='pagination')
-        if pagination:
-            next_link = pagination.find('a', class_='next')
-            if not next_link:
-                print(f"No more pages. Reached page {page}")
-                break
-        else:
-            break
-        
-        page += 1
-    
-    print(f"\nTotal films found: {len(films)}")
-    
-    if films:
-        print("\nFirst 20 films in your watchlist:")
-        for i, film in enumerate(films[:20], 1):
-            print(f"  {i}. {film}")
-    
-    return films
+if __name__ == "__main__":
+    import sys
+    from config import USERNAME
+    fetch_watchlist(sys.argv[1] if len(sys.argv) > 1 else USERNAME, verbose=True)

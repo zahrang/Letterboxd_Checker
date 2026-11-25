@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Secrets
+.env
+
+# Local state (watchlist snapshot + availability cache)
+data/
+
+# Scratch / debug output
+debug*.html
